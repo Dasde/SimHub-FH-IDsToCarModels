@@ -1,0 +1,9 @@
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.IDsToCarModels.csproj.AssemblyReference.cache
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.Properties.Resources.resources
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.IDsToCarModels.csproj.GenerateResource.cache
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.IDsToCarModels.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.IDsToCarModels.csproj.CopyComplete
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.IDsToCarModels.dll
+C:\Program Files (x86)\SimHub\PluginSdk\DaZD.FH.IDsToCarName\obj\Debug\DaZD.FH.IDsToCarModels.pdb
+C:\Program Files (x86)\SimHub\DaZD.FH.IDsToCarModels.dll
+C:\Program Files (x86)\SimHub\DaZD.FH.IDsToCarModels.pdb
