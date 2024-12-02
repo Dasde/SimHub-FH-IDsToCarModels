@@ -6,9 +6,9 @@ using System.IO;
 
 namespace DaZD.FH.IDsToCarModels
 {
-    [PluginDescription("This plugin load the Car ids lookup file for Forza Horizon 4 and 5 (use the same as Forza Motorsport")]
+    [PluginDescription("This plugin load the Car ids lookup file for Forza Horizon 4 and 5 and Forza Motorsport 7 (use the same as Forza Motorsport")]
     [PluginAuthor("DaZD")]
-    [PluginName("Forza Horizon IDs to Car Models")]
+    [PluginName("Forza IDs to Car Models")]
     public class DataPluginIDsToCarNames : SimHub.Plugins.IPlugin, IDataPlugin
     {
         /// <summary>
@@ -35,9 +35,9 @@ namespace DaZD.FH.IDsToCarModels
                 if (this.currentGame != data.GameName)
                 {
                     this.currentGame = data.GameName;
-                    if (data.GameName == "FH5" || data.GameName == "FH4")
+                    if (data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
                     {
-                        SimHub.Logging.Current.Info("Forza Horizon Game detected");
+                        SimHub.Logging.Current.Info("Forza Game detected (" + data.GameName + ")");
                         if (currentGameLookups != null)
                             currentGameLookups.Clear();
                         currentGameLookups = LoadCarNamesCSV(data.GameName);
@@ -50,7 +50,7 @@ namespace DaZD.FH.IDsToCarModels
                         return;
                     }
                 }
-                if (data.GameName == "FH5" || data.GameName == "FH4")
+                if (data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
                 {
                     if (data.OldData != null && data.NewData != null)
                     {
@@ -70,25 +70,6 @@ namespace DaZD.FH.IDsToCarModels
                 this.currentGame = "";
             }
         }
-        /// <summary>
-        /// Create a new csv file if it doesn't exist by copying the FM8 files.
-        /// </summary>
-        /// <param name="csvFileName"></param>
-        private void createCSVFIleIfNeeded(string csvFileName)
-        {
-            string sourceFile = @".\LookupTables\FM8.CarNames.csv";
-            if (!File.Exists(csvFileName)) {
-                try
-                {
-                    File.Copy(sourceFile, csvFileName, true);
-                }
-                catch (IOException iox)
-                {
-                    SimHub.Logging.Current.Info("CSV copy error : " + iox.Message);
-                }
-            }
-            
-        }
 
         /// <summary>
         /// Load lookup into a dictionnary
@@ -97,10 +78,9 @@ namespace DaZD.FH.IDsToCarModels
         /// <returns></returns>
         private Dictionary<int,string> LoadCarNamesCSV(string gameName)
         {
-            //var path = @".\LookupTables\" + gameName + ".CarNames.csv" ;
-            // let use the same file for every forza game.
+            // use the same file for every forza game.
             var path = @".\LookupTables\FM8.CarNames.csv";
-            //createCSVFIleIfNeeded(path);
+
             Dictionary<int,string> lookupCarNames = new Dictionary<int, string>();
             using (TextFieldParser csvParser = new TextFieldParser(path))
             {
@@ -156,7 +136,7 @@ namespace DaZD.FH.IDsToCarModels
         /// <param name="pluginManager"></param>
         public void Init(PluginManager pluginManager)
         {
-            SimHub.Logging.Current.Info("Starting plugin FH IDs to Car Models");
+            SimHub.Logging.Current.Info("Starting plugin Forza IDs to Car Models");
             pluginManager.AddProperty("FHCarModel", this.GetType(), this.currentCarModel);
         }
     }
