@@ -1,8 +1,8 @@
 ﻿using GameReaderCommon;
 using Microsoft.VisualBasic.FileIO;
 using SimHub.Plugins;
+using SimHub.Plugins.DataPlugins.DataCore;
 using System.Collections.Generic;
-using System.IO;
 
 namespace DaZD.FH.IDsToCarModels
 {
@@ -17,6 +17,7 @@ namespace DaZD.FH.IDsToCarModels
         public PluginManager PluginManager { get; set; }
         private string currentGame;
         private string currentCarModel;
+        private string carModel;
         private Dictionary<int, string> currentGameLookups ;
         /// <summary>
         /// Called one time per game data update, contains all normalized game data,
@@ -41,29 +42,20 @@ namespace DaZD.FH.IDsToCarModels
                         if (currentGameLookups != null)
                             currentGameLookups.Clear();
                         currentGameLookups = LoadCarNamesCSV(data.GameName);
-                        int carId = GetCarId(data.NewData.CarId);
-                        if (currentGameLookups.ContainsKey(carId))
-                            currentCarModel = currentGameLookups[carId];
-                        else
-                            currentCarModel = null;
-                        pluginManager.SetPropertyValue("FHCarModel", this.GetType(), currentCarModel);
-                        return;
                     }
                 }
                 if (data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
                 {
-                    if (data.OldData != null && data.NewData != null)
+                    if (data.OldData?.CarId != data.NewData?.CarId)
                     {
-                        if (data.OldData.CarId != data.NewData.CarId)
-                        {
                             int carId = GetCarId(data.NewData.CarId);
                             if (currentGameLookups.ContainsKey(carId))
                                 currentCarModel = currentGameLookups[carId];
                             else
-                                currentCarModel = null;
+                                currentCarModel = data.NewData.CarModel;
           
-                            pluginManager.SetPropertyValue("FHCarModel", this.GetType(), currentCarModel);
-                        }
+                            //pluginManager.SetPropertyValue("FHCarModel", this.GetType(), currentCarModel);
+                            carModel = currentCarModel;
                     }
                 }
             } else {
@@ -136,8 +128,11 @@ namespace DaZD.FH.IDsToCarModels
         /// <param name="pluginManager"></param>
         public void Init(PluginManager pluginManager)
         {
-            SimHub.Logging.Current.Info("Starting plugin Forza IDs to Car Models");
-            pluginManager.AddProperty("FHCarModel", this.GetType(), this.currentCarModel);
+            if (pluginManager.GameName == "FH5" || pluginManager.GameName == "FH4" || pluginManager.GameName == "FM7")
+            {
+                SimHub.Logging.Current.Info("Starting plugin Forza IDs to Car Models");
+                pluginManager.AttachDelegate("GameData.CarModel", pluginManager.GetPlugin<DataCorePlugin>().GetType(), () => carModel);
+            }
         }
     }
 }
