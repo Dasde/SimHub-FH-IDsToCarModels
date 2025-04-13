@@ -18,7 +18,7 @@ namespace DaZD.FH.IDsToCarModels
         private string currentGame;
         private string currentCarModel;
         private string carModel;
-        private Dictionary<int, string> currentGameLookups ;
+        private Dictionary<int, string> currentGameLookups;
         /// <summary>
         /// Called one time per game data update, contains all normalized game data,
         /// raw data are intentionnally "hidden" under a generic object type (A plugin SHOULD NOT USE IT)
@@ -48,17 +48,19 @@ namespace DaZD.FH.IDsToCarModels
                 {
                     if (data.OldData?.CarId != data.NewData?.CarId)
                     {
-                            int carId = GetCarId(data.NewData.CarId);
-                            if (currentGameLookups.ContainsKey(carId))
-                                currentCarModel = currentGameLookups[carId];
-                            else
-                                currentCarModel = data.NewData.CarModel;
-          
-                            //pluginManager.SetPropertyValue("FHCarModel", this.GetType(), currentCarModel);
-                            carModel = currentCarModel;
+                        int carId = GetCarId(data.NewData.CarId);
+                        if (currentGameLookups.ContainsKey(carId))
+                            currentCarModel = currentGameLookups[carId];
+                        else
+                            currentCarModel = data.NewData.CarModel;
+
+                        //pluginManager.SetPropertyValue("FHCarModel", this.GetType(), currentCarModel);
+                        carModel = currentCarModel;
                     }
                 }
-            } else {
+            }
+            else
+            {
                 this.currentGame = "";
             }
         }
@@ -68,12 +70,12 @@ namespace DaZD.FH.IDsToCarModels
         /// </summary>
         /// <param name="gameName"></param>
         /// <returns></returns>
-        private Dictionary<int,string> LoadCarNamesCSV(string gameName)
+        private Dictionary<int, string> LoadCarNamesCSV(string gameName)
         {
             // use the same file for every forza game.
             var path = @".\LookupTables\FM8.CarNames.csv";
 
-            Dictionary<int,string> lookupCarNames = new Dictionary<int, string>();
+            Dictionary<int, string> lookupCarNames = new Dictionary<int, string>();
             using (TextFieldParser csvParser = new TextFieldParser(path))
             {
                 csvParser.CommentTokens = new string[] { "#" };
