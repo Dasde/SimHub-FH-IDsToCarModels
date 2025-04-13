@@ -1,8 +1,9 @@
 ﻿################################################################################
 # Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
 ################################################################################
-
+/.vs
 /.vs/DaZD.FH-IDsToCarModels
 /bin/Release/DaZD.FH.IDsToCarModels.pdb
 /bin/Release/InputManagerCS.dll
+/obj
 /obj/Debug/Properties/DesignTimeResources.baml
