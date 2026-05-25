@@ -3,10 +3,11 @@ using Microsoft.VisualBasic.FileIO;
 using SimHub.Plugins;
 using SimHub.Plugins.DataPlugins.DataCore;
 using System.Collections.Generic;
+using System.Windows.Markup;
 
 namespace DaZD.FH.IDsToCarModels
 {
-    [PluginDescription("This plugin load the Car ids lookup file for Forza Horizon 4 and 5 and Forza Motorsport 7 (use the same as Forza Motorsport")]
+    [PluginDescription("This plugin load the Car ids lookup file for Forza Horizon 4, 5, 6 and Forza Motorsport 7 (use the same as Forza Motorsport")]
     [PluginAuthor("DaZD")]
     [PluginName("Forza IDs to Car Models")]
     public class DataPluginIDsToCarNames : SimHub.Plugins.IPlugin, IDataPlugin
@@ -36,7 +37,7 @@ namespace DaZD.FH.IDsToCarModels
                 if (this.currentGame != data.GameName)
                 {
                     this.currentGame = data.GameName;
-                    if (data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
+                    if (data.GameName == "FH6" || data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
                     {
                         SimHub.Logging.Current.Info("Forza Game detected (" + data.GameName + ")");
                         if (currentGameLookups != null)
@@ -44,7 +45,7 @@ namespace DaZD.FH.IDsToCarModels
                         currentGameLookups = LoadCarNamesCSV(data.GameName);
                     }
                 }
-                if (data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
+                if (data.GameName == "FH6" || data.GameName == "FH5" || data.GameName == "FH4" || data.GameName == "FM7")
                 {
                     if (data.OldData?.CarId != data.NewData?.CarId)
                     {
@@ -130,7 +131,7 @@ namespace DaZD.FH.IDsToCarModels
         /// <param name="pluginManager"></param>
         public void Init(PluginManager pluginManager)
         {
-            if (pluginManager.GameName == "FH5" || pluginManager.GameName == "FH4" || pluginManager.GameName == "FM7")
+            if (pluginManager.GameName == "FH6" || pluginManager.GameName == "FH5" || pluginManager.GameName == "FH4" || pluginManager.GameName == "FM7")
             {
                 SimHub.Logging.Current.Info("Starting plugin Forza IDs to Car Models");
                 pluginManager.AttachDelegate("GameData.CarModel", pluginManager.GetPlugin<DataCorePlugin>().GetType(), () => carModel);
